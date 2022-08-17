@@ -1,0 +1,25 @@
+version: '3.8'
+
+
+services:
+  frontend:
+    container_name: Battleships_FrontEnd
+    build: 
+      context: './FrontEnd'
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_URL: "http://localhost:${API_PORT_OUTSIDE}"
+    ports:
+      - "3000:80"
+    volumes:
+      - '.:/app'
+      - '/app/FrontEnd/node_modules'
+    networks:
+      - battleships-network
+    depends_on:
+      - backend
+
+
+networks:
+    battleships-network:
+
