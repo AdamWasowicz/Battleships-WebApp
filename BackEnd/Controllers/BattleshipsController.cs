@@ -24,7 +24,7 @@ namespace BackEnd.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("simulation")]
         [AllowAnonymous]
         public ActionResult<SimulateBattleshipsOutputDTO> SimulateBattleshipsGame([FromBody] SimulateBattleshipsInputDTO dto)
         {

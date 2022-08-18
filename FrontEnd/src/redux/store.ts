@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { enableMapSet } from 'immer';
 
 //Reducers
-import counterReducer from './features/counter-slice';
+import battleshipsReducer from './features/battleships-slice';
 
+enableMapSet();
 
 //Store
 export const store = configureStore({
     reducer: {
-        counter: counterReducer,
+        battleships: battleshipsReducer,
     }
 })
 

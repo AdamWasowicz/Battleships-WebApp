@@ -332,7 +332,7 @@ namespace Battleships.gameControl
             //simulationResult
             _simulationResult.player1ShotsMade = Player1ShotsMadeCopy;
             _simulationResult.player2ShotsMade = Player2ShotsMadeCopy;
-            _simulationResult.turns = _currentTurn;
+            _simulationResult.turnsAtEnd = _currentTurn;
             
 
             if (_playerShipsSunk[0] == _amountOfShipsOnOneSide || _playerShipsSunk[1] == _amountOfShipsOnOneSide)

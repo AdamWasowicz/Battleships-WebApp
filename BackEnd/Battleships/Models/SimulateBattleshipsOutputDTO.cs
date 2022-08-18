@@ -11,7 +11,7 @@ namespace Battleships.Models
         public string player1Name { get; set; }
         public string player2Name { get; set; }
         public int maxTurns { get; set; }
-        public int turns { get; set; }
+        public int turnsAtEnd { get; set; }
 
 
         //Setup

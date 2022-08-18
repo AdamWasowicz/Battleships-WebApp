@@ -24,17 +24,7 @@ const App: React.FunctionComponent = () => {
                                 key={i}
                                 path={route.route}
                                 element={<route.module/>}
-                            >
-                                {
-                                    route.subRoutes.map((subRoute: IRoute, d: number) => {
-                                        return <Route
-                                            key={i + "." + d}
-                                            path={subRoute.route}
-                                            element={<subRoute.route/>}
-                                        />
-                                    })
-                                }
-                            </Route>
+                            />
                         ))
                     }
                 </Routes>
