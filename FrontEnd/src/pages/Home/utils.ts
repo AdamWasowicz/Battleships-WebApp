@@ -9,14 +9,24 @@ import { requestSimulationEndpoint } from '../../assets/constants/ApiEndpoints';
 
 //Redux
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { setIsFetching, setIsDataRecived, setSimulationResults, setErrorMsg } from '../../redux/features/battleships-slice';
+import { setIsFetching, setIsDataRecived, setSimulationResults, setErrorMsg, resetBattleshipsState } from '../../redux/features/battleships-slice';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 
 export const useHome = () => {
 
+    //useHooks
+    const [player1Name, setPlayer1Name] = useState('');
+    const [player2Name, setPlayer2Name] = useState('');
+    const [maxTurns, setMaxTurns] = useState(0);
+
     const isFetching = useAppSelector(state => state.battleships.isFetching);
     const isDataRecived = useAppSelector(state => state.battleships.isDataRecived);
+    const errorMsg = useAppSelector(state => state.battleships.errorMsg);
+
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
 
     const requestSimulationApiCall = async (dto: ISimulateBattleshipsInputDTO) => {
@@ -38,7 +48,9 @@ export const useHome = () => {
 
             resultDTO = result.data;
             console.log(resultDTO);
+
             dispatch(setSimulationResults(resultDTO));
+            dispatch(setIsDataRecived(true));
         })
         .catch((e: AxiosError) => {
 
@@ -48,22 +60,40 @@ export const useHome = () => {
         .finally(() => {
 
             dispatch(setIsFetching(false));
-            dispatch(setIsDataRecived(true));
         });
     };
     
 
     const makeRequest = () => {
 
-        const test: ISimulateBattleshipsInputDTO = {
-            player1Name: 'Adam',
-            player2Name: 'Bob',
-            maxTurns: 150,
+        const dto: ISimulateBattleshipsInputDTO = {
+            player1Name: player1Name,
+            player2Name: player2Name,
+            maxTurns: maxTurns,
         }
 
-        requestSimulationApiCall(test);
+        requestSimulationApiCall(dto);
     }
 
 
-    return { isFetching, isDataRecived, makeRequest }
+    //useEffect
+    useEffect(() => {
+        dispatch(resetBattleshipsState());
+    }, [])
+
+    useEffect(() => {
+        if (isDataRecived == true)
+            navigate('simulation');
+    }, [isDataRecived])
+
+    useEffect(() => {
+        if (errorMsg != '')
+            alert(errorMsg);
+    }, [errorMsg])
+
+
+    return {
+         isFetching, isDataRecived, makeRequest,
+         player1Name, setPlayer1Name, player2Name, setPlayer2Name, maxTurns, setMaxTurns
+     }
 }

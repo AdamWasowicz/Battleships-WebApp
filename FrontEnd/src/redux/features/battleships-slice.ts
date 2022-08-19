@@ -2,6 +2,21 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import GridCoordinates from '../../pages/Simulation/assets/GridCoordinates';
 import ISimulateBattleshipsOutputDTO from '../../pages/Simulation/assets/ISimulateBattleshipsOutputDTO';
 
+const CreateMatrixGC = (sizeX: number, sizeY: number): GridCoordinates[][] => {
+
+    let retMatrix: GridCoordinates[][] = [];
+
+
+    for (let i: number = 0; i < sizeX; i++) {
+
+        retMatrix[i] = [];
+        for (let d: number = 0; d < sizeY; d++) 
+            retMatrix[i][d] = null;
+    }
+
+    return retMatrix;
+}
+
 
 interface BattleshipsState extends ISimulateBattleshipsOutputDTO {
     
@@ -10,8 +25,9 @@ interface BattleshipsState extends ISimulateBattleshipsOutputDTO {
     currentTurn: number,
     errorMsg: string,
 
-    //player1BoardState: Map<string, GridCoordinates>
-    //player2BoardState: Map<string, GridCoordinates>
+    player1BoardState: GridCoordinates[][];
+    player2BoardState: GridCoordinates[][];
+
 }
 
 
@@ -21,8 +37,8 @@ const initialState: BattleshipsState = {
     isDataRecived: false,
     currentTurn: 0,
     errorMsg: '',
-    //player1BoardState: new Map<string, GridCoordinates>(),
-    //player2BoardState: new Map<string, GridCoordinates>(),
+    player1BoardState: CreateMatrixGC(10, 10),
+    player2BoardState: CreateMatrixGC(10, 10),
 
     //from EXTENDS
     endMsg: '',
@@ -60,6 +76,11 @@ const battleshipsSlice = createSlice({
             state.player2ShotsMade = action.payload.player2ShotsMade;
         },
 
+        resetBattleshipsState(state: BattleshipsState) {
+
+            state = initialState;
+        },
+
         incrementCurrentTurn(state: BattleshipsState) {
 
             state.currentTurn = state.currentTurn + 1;
@@ -74,18 +95,12 @@ const battleshipsSlice = createSlice({
             state.isDataRecived = action.payload;
         },
 
-        // updatePlayer1BoardState(
-        //     state: BattleshipsState, 
-        //     action: PayloadAction<GridCoordinates>) {
+        updatePlayer1BoardState(
+            state: BattleshipsState, 
+            action: PayloadAction<[GridCoordinates, number, number]>) {
             
-        //     let newBoardState = state.player1BoardState.set(
-        //         action.payload.returnCoordinatesAsString(),
-        //         action.payload)
-        //     state = {
-        //         ...state,
-        //         player1BoardState: newBoardState
-        //     }
-        // },
+                state.player1BoardState[action.payload[1]][action.payload[2]] = action.payload[0];
+        },
 
         // updatePlayer2BoardState(
         //     state: BattleshipsState, 
@@ -115,6 +130,8 @@ export const {
     setSimulationResults, incrementCurrentTurn, 
     //updatePlayer1BoardState, updatePlayer2BoardState,
     setIsFetching, setIsDataRecived: setIsDataRecived,
-    setErrorMsg } = battleshipsSlice.actions;
+    setErrorMsg, resetBattleshipsState 
+    
+} = battleshipsSlice.actions;
     
 export default battleshipsSlice.reducer;

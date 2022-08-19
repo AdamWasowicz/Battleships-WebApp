@@ -15,7 +15,6 @@ import { routes } from '../../router/routes';
 const App: React.FunctionComponent = () => {
     return (
         <div className='App'>
-            Battleships
             <Router>
                 <Routes>
                     {

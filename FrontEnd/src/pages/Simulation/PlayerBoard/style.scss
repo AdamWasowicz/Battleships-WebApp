@@ -1,0 +1,60 @@
+@import '../../../assets/constants/styleConstants.scss';
+
+.PlayerBoard {
+
+    //Object size
+    width: 605px;
+    height: 605px;
+
+    //Flex
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+
+    //Color
+    background-color: cornflowerblue;
+}
+
+
+.Grid {
+    
+    //Object size
+    width: 55px;
+    height: 55px;
+
+    background-color: gray;
+    border: 2px solid black;
+
+    text-align: center;
+    line-height: 55px;
+
+    &.C {
+        background-color: $carrier-background;
+        color: $carrier-color;
+    }
+
+    &.B {
+        background-color: $battleship-background;
+        color: $battleships-color;
+    }
+
+    &.D {
+        background-color: $destroyer-background;
+        color: $destroyer-color;
+    }
+
+    &.S {
+        background-color: $submarine-background;
+        color: $submarine-color;
+    }
+
+    &.P {
+        background-color: $patrol_boat-background;
+        color: $patrol_boat-color;
+    }
+
+    &.GridCorner {
+        background-color: rgb(255, 255, 255);
+    }
+}
