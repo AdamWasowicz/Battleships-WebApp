@@ -1,22 +1,17 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
-import { useAppSelector } from '../../redux/hooks';
 
 //Components
 import PlayerBoard from './PlayerBoard';
+import SimulationHeader from './SimulationHeader';
 
 //Style
 import './style.scss';
+import { useSimulation } from './utils';
 
 
 const Simulation: React.FunctionComponent = () => {
 
-    const navigate = useNavigate();
-    const isDataRecived = useAppSelector(state => state.battleships.isDataRecived);
-
-    const goBackToRoot = () => {
-        navigate('/');
-    }
+    const { isDataRecived, goBackToRoot } = useSimulation();
 
     if (isDataRecived == false){
         return (
@@ -29,6 +24,8 @@ const Simulation: React.FunctionComponent = () => {
 
     return (
         <div className='Simulation'>
+            <SimulationHeader/>
+
             <div className='PlayerBoardContainer'>
                 <PlayerBoard playerId={0}/>
                 <PlayerBoard playerId={1}/>

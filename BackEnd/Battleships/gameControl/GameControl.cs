@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Battleships.shared;
 using Battleships.ship;
 using Battleships.Models;
+using BackEnd.Exceptions;
 
 
 namespace Battleships.gameControl
@@ -352,7 +353,7 @@ namespace Battleships.gameControl
             _player2 = player2;
 
             if (maxTurns <= 0)
-                throw new InvalidDataException();
+                throw new InvalidMaxTurnsArgumentException();
 
             _maxTurns = maxTurns;
 

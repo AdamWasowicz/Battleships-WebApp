@@ -1,1 +1,75 @@
 @import '../../assets/constants/styleConstants.scss';
+
+
+.Error404 {
+
+    //Object size
+    width: 1000px;
+    height: 300px;
+
+    //Object position
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+
+    //Content position
+    padding: 20px;
+
+    //Flex
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    //Shadow
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+    //Text
+    text-align: center;
+
+
+    //H1
+    > h1 {
+
+        //Text
+        font-size: 42px;
+        font-family: $font-header;
+    }
+
+    > button {
+
+        //Object size
+        width: 400px;
+        height: 75px;
+
+        //Object position
+        margin-left: auto;
+        margin-right: auto;
+
+        //Border
+        border: 4px solid $primary-base;
+
+        //Color
+        color: $primary-base;
+        background-color: transparent;
+
+        //Text
+        font-size: 32px;
+        font-family: $font-normal;
+        font-weight: 700;
+
+        //Other
+        transition: 0.2s;
+        
+
+
+        &:hover {
+
+            //Color
+            border-color: $secondary-base;
+            color: $secondary-base;
+
+            //Other
+            transition: 0.2s;
+        }
+    }
+}

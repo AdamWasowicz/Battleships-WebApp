@@ -1,19 +1,20 @@
 @import '../../../assets/constants/styleConstants.scss';
 
+
+
 .PlayerBoard {
 
     //Object size
-    width: 605px;
-    height: 605px;
+    width: 609px;
+    height: 609px;
 
     //Flex
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     
-
-    //Color
-    background-color: cornflowerblue;
+    //Border
+    border: 2px solid black;
 }
 
 
@@ -23,11 +24,17 @@
     width: 55px;
     height: 55px;
 
+    //Color
     background-color: gray;
+
+    //Border
     border: 2px solid black;
 
+    //Text
     text-align: center;
     line-height: 55px;
+    font-family: $font-header;
+    font-weight: 700;
 
     &.C {
         background-color: $carrier-background;
@@ -56,5 +63,14 @@
 
     &.GridCorner {
         background-color: rgb(255, 255, 255);
+    }
+
+    &.isHit.Ship {
+        background-color: rgb(240, 22, 22);
+        color: white; 
+    }
+    &.isHit {
+        background-color: rgb(208, 118, 118);
+        color: white;
     }
 }

@@ -34,6 +34,8 @@
             //Text
             text-align: center;
             font-size: 80px;
+            font-family: $font-header;
+
 
             p {
 
@@ -54,12 +56,12 @@
 
             //Object size
             width: 100%;
-            height: 100px;
 
             //flex
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            flex-wrap: wrap;
 
 
             //Object position
@@ -67,6 +69,9 @@
 
     
             > label {
+
+                //Object size
+                height: 100px;
                 
                 //Flex
                 display: flex;
@@ -82,6 +87,7 @@
 
                 //Text
                 font-size: 40px;
+                font-family: $font-header;
 
                 //Color
                 background-color: $primary-base;
@@ -93,12 +99,14 @@
 
                 //Object size
                 width: 70%;
+                height: 100px;
 
                 //Content position
                 padding: 10px;
 
                 //Text
                 font-size: 40px;
+                font-family: $font-normal;
 
 
                 &:focus {
@@ -106,14 +114,26 @@
                     outline: none;
                     border: 4px solid $secondary-base;
                 }
-
-                &.invalid {
-                    
-                    outline: none;
-                    border: 2px solid red;
-                    color: red;
-                }
             }
+
+            //FormError
+            > .FormError {
+
+                //Object size
+                width: 100%;
+
+                //Content position
+                padding: 10px;
+
+                //Text
+                text-align: right;
+                font-size: 32px;
+                font-family: $font-normal;
+
+                //Color
+                color: red;
+            }
+
         }
 
 
@@ -142,6 +162,8 @@
 
                 //Text
                 font-size: 56px;
+                font-family: $font-header;
+                font-weight: 700;
 
                 //Transition
                 transition: 0.2s;
@@ -155,6 +177,12 @@
 
                     //Transition
                     transition: 0.2s;
+                }
+
+                &.Disabled {
+
+                    border-color: gray;
+                    color: gray;
                 }
             }
         }

@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router';
-import { useAppSelector } from '../../../redux/hooks';
+import React from 'react';
 import IShip from '../assets/IShip';
+
+import { usePlayerBoard } from './utils';
 
 //Style
 import './style.scss';
@@ -9,31 +9,7 @@ import './style.scss';
 
 const PlayerBoard: React.FunctionComponent<{playerId: number}> = ( { playerId } ) => {
 
-    const CreatePlayerShipsMap = (): Map<string, IShip> => {
-
-        let shipsMap = new Map<string, IShip>();
-            playerShips.forEach((ship: IShip) => {
-            ship.gridCoordinates.forEach((gc) => {
-                shipsMap.set(gc.x + gc.y, ship);
-            })
-        });
-
-        return shipsMap;
-    }
-
-    const eleven: number[] = [0,1,2,3,4,5,6,7,8,9,10];
-    
-    const playerShips = playerId == 0 
-    ? useAppSelector(state => state.battleships.player1Ships)
-    : useAppSelector(state => state.battleships.player2Ships);
-
-    const playerBoardState = playerId == 0
-    ? useAppSelector(state => state.battleships.player1BoardState)
-    : useAppSelector(state => state.battleships.player2BoardState);
-
-    let shipsMap = useMemo(() => {
-        return CreatePlayerShipsMap()
-    }, [])
+    const {shipsMap, eleven, shotsMap } = usePlayerBoard(playerId);
 
     return (
         <div className='PlayerBoard'>
@@ -48,7 +24,11 @@ const PlayerBoard: React.FunctionComponent<{playerId: number}> = ( { playerId } 
                                     String.fromCharCode(arg1 + +'A'.charCodeAt(0) - 1) + (arg2).toLocaleString()
                                 )
                             } 
-                            isHit={false}
+                            isHit={
+                                shotsMap.get(
+                                    String.fromCharCode(arg1 + +'A'.charCodeAt(0) - 1) + (arg2).toLocaleString()
+                                )
+                            }
                             key={arg1+arg2*10}
                         />
                     })
@@ -81,10 +61,6 @@ const Grid: React.FunctionComponent<{X: string, Y:string, ship: IShip, isHit: bo
             return 'X';
         }
 
-        if (ship != null && isHit == true) {
-            return `[${ship.className[0]}]`
-        }
-
         if (ship != null) {
             return ship.className[0];
         }
@@ -97,8 +73,14 @@ const Grid: React.FunctionComponent<{X: string, Y:string, ship: IShip, isHit: bo
     const cn = ship != null ? ship.className[0] : '';
 
     return(
-        <div className={`Grid ${cn} ${corner ? 'GridCorner' : 'a'}`}>
-            {text}
+        <div className={
+            `Grid 
+            ${cn} 
+            ${corner ? 'GridCorner' : ''} 
+            ${isHit ? 'isHit' : ''}
+            ${ship != null ? 'Ship' : ''}`}>
+
+                {text}
         </div>
     )
 }

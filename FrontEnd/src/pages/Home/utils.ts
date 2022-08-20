@@ -18,8 +18,15 @@ export const useHome = () => {
 
     //useHooks
     const [player1Name, setPlayer1Name] = useState('');
+    const [player1NameValid, setPlayer1NameValid] = useState(false);
+
     const [player2Name, setPlayer2Name] = useState('');
-    const [maxTurns, setMaxTurns] = useState(0);
+    const [player2NameValid, setPlayer2NameValid] = useState(false);
+
+    const [maxTurns, setMaxTurns] = useState(150);
+    const [maxTurnsValid, setMaxTurnsValid] = useState(true);
+    const [formValid, setFormValid] = useState(false);
+
 
     const isFetching = useAppSelector(state => state.battleships.isFetching);
     const isDataRecived = useAppSelector(state => state.battleships.isDataRecived);
@@ -51,11 +58,22 @@ export const useHome = () => {
 
             dispatch(setSimulationResults(resultDTO));
             dispatch(setIsDataRecived(true));
+
+            if (result.status == 200)
+                navigate('simulation');
         })
         .catch((e: AxiosError) => {
 
-            console.error(e.message);
-            dispatch(setErrorMsg(e.message));
+            if (e.response == null) {
+
+                dispatch(setErrorMsg(`ERROR: Unknown Error`));
+                alert('There is something wrong, try again later');
+            }
+            else {
+
+                dispatch(setErrorMsg(`ERROR: ${e.response.data}`));
+            }
+            
         })
         .finally(() => {
 
@@ -76,24 +94,28 @@ export const useHome = () => {
     }
 
 
+
     //useEffect
     useEffect(() => {
         dispatch(resetBattleshipsState());
+
     }, [])
 
     useEffect(() => {
-        if (isDataRecived == true)
-            navigate('simulation');
-    }, [isDataRecived])
+        //Validation
+        setPlayer1NameValid(player1Name.length > 0);
+        setPlayer2NameValid(player2Name.length > 0);
+        setMaxTurnsValid(maxTurns > 0);
 
-    useEffect(() => {
-        if (errorMsg != '')
-            alert(errorMsg);
-    }, [errorMsg])
+        setFormValid(player1Name.length > 0 && player2Name.length > 0 && maxTurns > 0);
+
+    }, [player1Name, player2Name, maxTurns])
 
 
     return {
          isFetching, isDataRecived, makeRequest,
-         player1Name, setPlayer1Name, player2Name, setPlayer2Name, maxTurns, setMaxTurns
+         player1Name, setPlayer1Name, player2Name, setPlayer2Name, 
+         maxTurns, setMaxTurns, 
+         formValid, player1NameValid, player2NameValid, maxTurnsValid
      }
 }
