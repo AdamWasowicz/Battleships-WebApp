@@ -1,5 +1,5 @@
-import { useAppSelector } from "../../../redux/hooks";
-import IShip from "../assets/IShip";
+import { useAppSelector } from "../../../../redux/hooks";
+import IShip from "../../assets/IShip";
 
 
 

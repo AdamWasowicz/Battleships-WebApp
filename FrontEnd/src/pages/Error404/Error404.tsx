@@ -1,8 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
-
-//Style
-import './style.scss';
+import InformationWithButton from '../../components/InformationWithButton';
 
 
 const Error404: React.FunctionComponent = () => {
@@ -13,10 +11,11 @@ const Error404: React.FunctionComponent = () => {
     }
     
     return (
-        <div className='Error404'>
-            <h1>There is nothing here, look somewhere else</h1>
-            <button onClick={redirectToRoot}>Return to Home</button>
-        </div>
+        <InformationWithButton
+            onClick={redirectToRoot}
+            text='There is nothing here, go to home page'
+            buttonText='Return to Home'
+        />
     )
 }
 

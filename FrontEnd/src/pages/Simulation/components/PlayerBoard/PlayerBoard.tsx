@@ -1,5 +1,5 @@
 import React from 'react';
-import IShip from '../assets/IShip';
+import IShip from '../../assets/IShip';
 
 import { usePlayerBoard } from './utils';
 

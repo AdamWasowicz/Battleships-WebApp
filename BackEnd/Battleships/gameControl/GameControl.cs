@@ -312,7 +312,6 @@ namespace Battleships.gameControl
             //simulationResult
             _simulationResult.player1Name = Player1.GetPlayerName();
             _simulationResult.player2Name = Player2.GetPlayerName();
-            _simulationResult.maxTurns = _maxTurns;
 
             PlaceShipsMain();
 
@@ -321,7 +320,7 @@ namespace Battleships.gameControl
             _simulationResult.player2Ships = Player2ShipsCopy;
 
 
-            while (_currentTurn <= _maxTurns
+            while (_currentTurn < _maxTurns
                 && _playerShipsSunk[0] < _amountOfShipsOnOneSide
                 && _playerShipsSunk[1] < _amountOfShipsOnOneSide)
             {
@@ -333,13 +332,13 @@ namespace Battleships.gameControl
             //simulationResult
             _simulationResult.player1ShotsMade = Player1ShotsMadeCopy;
             _simulationResult.player2ShotsMade = Player2ShotsMadeCopy;
-            _simulationResult.turnsAtEnd = _currentTurn;
+            _simulationResult.maxTurns = _currentTurn;
             
 
             if (_playerShipsSunk[0] == _amountOfShipsOnOneSide || _playerShipsSunk[1] == _amountOfShipsOnOneSide)
                 EndGameByWin();
 
-            if (_currentTurn > _maxTurns)
+            if (_currentTurn >= _maxTurns)
                 EndGameByTimeOut();
 
             return _simulationResult;

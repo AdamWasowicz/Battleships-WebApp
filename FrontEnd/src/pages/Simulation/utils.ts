@@ -14,31 +14,35 @@ export const useSimulation = () => {
     const currentTurn = useAppSelector(state => state.battleships.currentTurn);
     const maxTurn = useAppSelector(state => state.battleships.maxTurns);
     const endMsg = useAppSelector(state => state.battleships.endMsg);
+    const refreshDelay = useAppSelector(state => state.battleships.refreshDelay);
+    const isSimulationPause = useAppSelector(state => state.battleships.isSimulationPause);
+
 
     const progressGame = () => {
 
-        if (currentTurn % 2 == 0) {
+        if (isSimulationPause)
+            return;
 
-            dispatch(updatePlayer1BoardState());
-            dispatch(incrementCurrentTurn());
-        }
-        else {
+        if (currentTurn % 2 == 0) 
+            dispatch(updatePlayer1BoardState()); 
+        else 
             dispatch(updatePlayer2BoardState());
+        
+        if (currentTurn < maxTurn) 
             dispatch(incrementCurrentTurn());
-        }
     }
 
     useEffect(() => {
         let gameControl: ReturnType<typeof setTimeout>;
 
-        if (currentTurn <= maxTurn)
-            gameControl = setTimeout(progressGame, 1000);
+        if (currentTurn < maxTurn)
+            gameControl = setTimeout(progressGame, refreshDelay);
 
         return () => clearTimeout(gameControl);
     })
 
     useEffect(() => {
-        if (currentTurn > maxTurn && isDataRecived)
+        if (currentTurn >= maxTurn && isDataRecived)
             alert(`Game finished\n${endMsg}`);
     }, [currentTurn])
 

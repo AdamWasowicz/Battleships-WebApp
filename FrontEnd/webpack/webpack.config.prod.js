@@ -3,7 +3,6 @@ const pathResolver = require('path').resolve;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { EnvironmentPlugin } = require('webpack');
 
-console.log(process.env);
 
 module.exports = {
 
@@ -15,14 +14,14 @@ module.exports = {
     poll: true
   },
 
-  devServer: {
-    host: '0.0.0.0',
-    allowedHosts: 'all',
-    hot: true,
-    historyApiFallback: true,
-    port: 3000,
-    open: true,
-  },
+  // devServer: {
+  //   host: '0.0.0.0',
+  //   allowedHosts: 'all',
+  //   hot: true,
+  //   historyApiFallback: true,
+  //   port: 3000,
+  //   open: true,
+  // },
 
   mode: 'production',
   devtool: 'inline-source-map',
@@ -57,7 +56,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     publicPath: '/',
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, '../build'),
     clean: true,
   },
 
@@ -71,9 +70,7 @@ module.exports = {
       
       REACT_APP_API_URL: process.env.REACT_APP_API_URL != null
       ? process.env.REACT_APP_API_URL 
-      : 'http://localhost:8000',
-
-      
+      : 'http://localhost:55545',
     })
   ],
 };

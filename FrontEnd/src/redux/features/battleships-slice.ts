@@ -11,6 +11,8 @@ interface BattleshipsState extends ISimulateBattleshipsOutputDTO {
 
     player1BoardState: string[];
     player2BoardState: string[];
+    refreshDelay: number;
+    isSimulationPause: boolean;
 }
 
 
@@ -22,6 +24,8 @@ const initialState: BattleshipsState = {
     errorMsg: '',
     player1BoardState: [],
     player2BoardState: [],
+    refreshDelay: 1000,
+    isSimulationPause: false,
 
     //from EXTENDS
     endMsg: '',
@@ -61,7 +65,27 @@ const battleshipsSlice = createSlice({
 
         resetBattleshipsState(state: BattleshipsState) {
 
-            state = initialState;
+            state.isFetching = false;
+            state.isDataRecived =  false;
+            state.currentTurn = 0;
+            state.errorMsg = '';
+            state.player1BoardState = [];
+            state.player2BoardState = [];
+            state.refreshDelay = 1000;
+            state.isSimulationPause = false;
+
+            state.endMsg = '';
+
+            state.player1Name = '';
+            state.player2Name = '';
+            state.maxTurns = 0;
+            state.turnsAtEnd = 0;
+
+            state.player1Ships = null;
+            state.player2Ships = null;
+
+            state.player1ShotsMade = null;
+            state.player2ShotsMade = null;
         },
 
         incrementCurrentTurn(state: BattleshipsState) {
@@ -79,40 +103,42 @@ const battleshipsSlice = createSlice({
             state.isDataRecived = action.payload;
         },
 
-        updatePlayer1BoardState(
-            state: BattleshipsState, 
-            action: PayloadAction) {
+        updatePlayer1BoardState(state: BattleshipsState) {
             
-                const newCoords = state.player1ShotsMade[state.player1BoardState.length].item1.x 
-                + state.player1ShotsMade[state.player1BoardState.length].item1.y
+            const newCoords = state.player1ShotsMade[state.player1BoardState.length].item1.x 
+            + state.player1ShotsMade[state.player1BoardState.length].item1.y
 
-                const boardCopy = state.player1BoardState;
-                boardCopy.push(newCoords);
+            const boardCopy = state.player1BoardState;
+            boardCopy.push(newCoords);
 
-                state.player1BoardState = boardCopy;
+            state.player1BoardState = boardCopy;
         },
 
-        updatePlayer2BoardState(
-            state: BattleshipsState, 
-            action: PayloadAction) {
+        updatePlayer2BoardState(state: BattleshipsState) {
             
-                const newCoords = state.player2ShotsMade[state.player2BoardState.length].item1.x 
-                + state.player2ShotsMade[state.player2BoardState.length].item1.y
+            const newCoords = state.player2ShotsMade[state.player2BoardState.length].item1.x 
+            + state.player2ShotsMade[state.player2BoardState.length].item1.y
 
-                const boardCopy = state.player2BoardState;
-                boardCopy.push(newCoords);
+            const boardCopy = state.player2BoardState;
+            boardCopy.push(newCoords);
 
-                state.player2BoardState = boardCopy;
+            state.player2BoardState = boardCopy;
         },
 
-        setErrorMsg(
-            state: BattleshipsState,
-            action: PayloadAction<string>) {
+        setErrorMsg(state: BattleshipsState, action: PayloadAction<string>) {
 
             state.errorMsg = action.payload;
         },
 
+        setRefreshDelay(state: BattleshipsState, action: PayloadAction<number>) {
 
+            state.refreshDelay = action.payload;
+        },
+
+        setIsSimulationPause(state: BattleshipsState, action: PayloadAction<boolean>) {
+
+            state.isSimulationPause = action.payload;
+        }
     }
 });
 
@@ -120,7 +146,8 @@ export const {
     setSimulationResults, incrementCurrentTurn, 
     updatePlayer1BoardState, updatePlayer2BoardState,
     setIsFetching, setIsDataRecived: setIsDataRecived,
-    setErrorMsg, resetBattleshipsState 
+    setErrorMsg, resetBattleshipsState, setRefreshDelay,
+    setIsSimulationPause,
     
 } = battleshipsSlice.actions;
     

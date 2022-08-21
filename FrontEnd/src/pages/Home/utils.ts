@@ -9,7 +9,7 @@ import { requestSimulationEndpoint } from '../../assets/constants/ApiEndpoints';
 
 //Redux
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { setIsFetching, setIsDataRecived, setSimulationResults, setErrorMsg, resetBattleshipsState } from '../../redux/features/battleships-slice';
+import { setIsFetching, setIsDataRecived, setSimulationResults, setErrorMsg, resetBattleshipsState} from '../../redux/features/battleships-slice';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -30,7 +30,6 @@ export const useHome = () => {
 
     const isFetching = useAppSelector(state => state.battleships.isFetching);
     const isDataRecived = useAppSelector(state => state.battleships.isDataRecived);
-    const errorMsg = useAppSelector(state => state.battleships.errorMsg);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -39,6 +38,7 @@ export const useHome = () => {
     const requestSimulationApiCall = async (dto: ISimulateBattleshipsInputDTO) => {
 
         const url = process.env.REACT_APP_API_URL + requestSimulationEndpoint;
+        console.log(url);
         let resultDTO: ISimulateBattleshipsOutputDTO;
 
         dispatch(setIsFetching(true));
@@ -54,7 +54,6 @@ export const useHome = () => {
         .then(result => {
 
             resultDTO = result.data;
-            console.log(resultDTO);
 
             dispatch(setSimulationResults(resultDTO));
             dispatch(setIsDataRecived(true));
@@ -94,13 +93,7 @@ export const useHome = () => {
     }
 
 
-
     //useEffect
-    useEffect(() => {
-        dispatch(resetBattleshipsState());
-
-    }, [])
-
     useEffect(() => {
         //Validation
         setPlayer1NameValid(player1Name.length > 0);
@@ -110,6 +103,11 @@ export const useHome = () => {
         setFormValid(player1Name.length > 0 && player2Name.length > 0 && maxTurns > 0);
 
     }, [player1Name, player2Name, maxTurns])
+
+    useEffect(() => {
+        dispatch(resetBattleshipsState());
+        
+    }, []);
 
 
     return {

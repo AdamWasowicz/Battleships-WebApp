@@ -1,8 +1,10 @@
 import React from 'react';
+import InformationWithButton from '../../components/InformationWithButton';
 
 //Components
-import PlayerBoard from './PlayerBoard';
-import SimulationHeader from './SimulationHeader';
+import PlayerBoard from './components/PlayerBoard';
+import SimulationFooter from './components/SimulationFooter';
+import SimulationHeader from './components/SimulationHeader';
 
 //Style
 import './style.scss';
@@ -15,10 +17,11 @@ const Simulation: React.FunctionComponent = () => {
 
     if (isDataRecived == false){
         return (
-            <div>
-                There is no data for simulation, return to the home page to request simulation
-                <button onClick={goBackToRoot}>Go back</button>
-            </div>
+            <InformationWithButton 
+                onClick={goBackToRoot}
+                text='There is no data for simulation, return to home page'
+                buttonText='Return to Home' 
+            />
         )
     }
 
@@ -30,6 +33,8 @@ const Simulation: React.FunctionComponent = () => {
                 <PlayerBoard playerId={0}/>
                 <PlayerBoard playerId={1}/>
             </div>
+
+            <SimulationFooter/>
         </div>
     );
 }
