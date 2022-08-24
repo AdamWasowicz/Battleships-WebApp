@@ -1,0 +1,192 @@
+@import '../../assets/constants/styleConstants.scss';
+
+
+
+.Home {
+
+    //FormContainer
+    .FormContainer {
+
+        //Flex
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+
+        //Object position
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 15vh;
+
+        //Content position
+        padding: 10px;
+
+        //Object size
+        width: 1200px;
+
+        //Shadow
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+
+        //FormTitle
+        .FormTitle {
+
+            //Object positon
+            margin-bottom: 10px;
+
+            //Text
+            text-align: center;
+            font-size: 80px;
+            font-family: $font-header;
+
+
+            p {
+
+                display: inline;
+                color: $primary-base;
+            }
+
+            p + p {
+
+                display: inline;
+                color: $secondary-base;
+            }
+        }
+
+
+        //FormField
+        .FormField {
+
+            //Object size
+            width: 100%;
+
+            //flex
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+
+            //Object position
+            margin-bottom: 20px;
+
+
+            > label {
+
+                //Object size
+                height: 100px;
+
+                //Flex
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                //Content position
+                padding-left: 10px;
+                padding-right: 10px;
+
+                //Object size
+                width: 30%;
+
+                //Text
+                font-size: 40px;
+                font-family: $font-header;
+
+                //Color
+                background-color: $primary-base;
+                color: white;
+            }
+
+
+            > input {
+
+                //Object size
+                width: 70%;
+                height: 100px;
+
+                //Content position
+                padding: 10px;
+
+                //Text
+                font-size: 40px;
+                font-family: $font-normal;
+
+
+                &:focus {
+
+                    outline: none;
+                    border: 4px solid $secondary-base;
+                }
+            }
+
+            //FormError
+            > .FormError {
+
+                //Object size
+                width: 100%;
+
+                //Content position
+                padding: 10px;
+
+                //Text
+                text-align: right;
+                font-size: 32px;
+                font-family: $font-normal;
+
+                //Color
+                color: red;
+            }
+
+        }
+
+
+        .SubmitButtonSontainer {
+
+            //Object size
+            width: 100%;
+
+            //Text
+            text-align: center;
+
+            //FormSubmitButton
+            .FormSubmitButton {
+
+                //Object size
+                width: 40%;
+                height: 100px;
+
+                //Content position
+                padding: 5px;
+
+                //Color
+                background-color: transparent;
+                border: 4px solid $primary-base;
+                color: $primary-base;
+
+                //Text
+                font-size: 56px;
+                font-family: $font-header;
+                font-weight: 700;
+
+                //Transition
+                transition: 0.2s;
+
+
+                &:hover {
+
+                    //Color
+                    border-color: $secondary-base;
+                    color: $secondary-base;
+
+                    //Transition
+                    transition: 0.2s;
+                }
+
+                &.Disabled {
+
+                    border-color: gray;
+                    color: gray;
+                }
+            }
+        }
+    }
+}
