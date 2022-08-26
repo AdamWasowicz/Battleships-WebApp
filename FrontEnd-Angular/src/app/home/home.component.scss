@@ -1,8 +1,20 @@
 @import '../../assets/constants/styleConstants.scss';
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+button:hover {
+
+  cursor: pointer;
+}
+
 
 
 .Home {
+    box-sizing: border-box;
 
     //FormContainer
     .FormContainer {
@@ -18,7 +30,7 @@
         margin-top: 15vh;
 
         //Content position
-        padding: 10px;
+        padding: 20px;
 
         //Object size
         width: 1200px;
@@ -62,7 +74,7 @@
             //flex
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: flex-start;
             flex-wrap: wrap;
 
 
@@ -81,8 +93,7 @@
                 justify-content: center;
 
                 //Content position
-                padding-left: 10px;
-                padding-right: 10px;
+                padding: 10px;
 
                 //Object size
                 width: 30%;
@@ -139,7 +150,7 @@
         }
 
 
-        .SubmitButtonSontainer {
+        .SubmitButtonContainer {
 
             //Object size
             width: 100%;
@@ -181,7 +192,7 @@
                     transition: 0.2s;
                 }
 
-                &.Disabled {
+                &:disabled {
 
                     border-color: gray;
                     color: gray;
