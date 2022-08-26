@@ -1,7 +1,4 @@
-﻿using Battleships.shared;
-using Battleships.ship;
-
-namespace Battleships.Models
+﻿namespace BackEnd.Models
 {
     public class SimulateBattleshipsInputDTO
     {

@@ -1,4 +1,4 @@
-﻿namespace Battleships.ship
+﻿namespace Battleships
 {
     public static class ShipDetails
     {
@@ -17,7 +17,7 @@
                 new Tuple<string, int>("Destroyer", 3),
                 new Tuple<string, int>("Submarine", 3),
                 new Tuple<string, int>("Patrol boat", 2)
-            };  
+            };
         }
     }
 }

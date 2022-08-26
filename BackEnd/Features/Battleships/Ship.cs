@@ -1,7 +1,6 @@
-﻿using Battleships.shared;
+﻿using Battleships.Types;
 
-
-namespace Battleships.ship
+namespace Battleships
 {
     public class Ship
     {
@@ -41,7 +40,7 @@ namespace Battleships.ship
                 GridCoordinates[] retArray = new GridCoordinates[_gridCoordinates.Length];
                 for (int i = 0; i < _gridCoordinates.Length; i++)
                     retArray[i] = new GridCoordinates(_gridCoordinates[i]);
-                
+
                 return retArray;
             }
         }
@@ -141,7 +140,7 @@ namespace Battleships.ship
         public bool TryHitShip(GridCoordinates gridCoordinates)
         {
             for (int i = 0; i < _gridCoordinates.Length; i++)
-{
+            {
                 if (gridCoordinates.GetCombinedCoordinatesAsString() == _gridCoordinates[i].GetCombinedCoordinatesAsString())
                 {
                     PartHit(i);

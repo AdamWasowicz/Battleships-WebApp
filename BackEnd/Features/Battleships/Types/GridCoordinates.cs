@@ -1,4 +1,4 @@
-﻿namespace Battleships.shared
+﻿namespace Battleships.Types
 {
     public struct GridCoordinates
     {
@@ -6,20 +6,12 @@
         private int _y;
 
 
-
         //GET
-        public char X
-        {
-            get { return _x; }
-        }
+        public char X { get => _x; }
 
-        public int Y
-        {
-            get { return _y; }
-        }
+        public int Y { get => _y; }
 
-
-
+       
         //Public methods
         public static bool ValidateParams(string stringCoordinates)
         {
@@ -43,9 +35,6 @@
 
             //GridCoordinates
             return ValidateParams(X, Y);
-
-
-            return true;
         }
 
         public static bool ValidateParams(char x, int y)
@@ -67,12 +56,8 @@
             return true;
         }
 
-        public string GetCombinedCoordinatesAsString()
-        {
-            return _x.ToString() + _y.ToString();
-        }
-
-
+        public string GetCombinedCoordinatesAsString() => _x.ToString() + _y.ToString();
+        
 
         public GridCoordinates(char x, int y)
         {

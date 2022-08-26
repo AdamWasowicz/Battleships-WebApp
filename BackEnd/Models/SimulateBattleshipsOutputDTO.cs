@@ -1,7 +1,7 @@
-﻿using Battleships.shared;
-using Battleships.ship;
+﻿using Battleships.Types;
+using Battleships;
 
-namespace Battleships.Models
+namespace BackEnd.Models
 {
     public class SimulateBattleshipsOutputDTO 
     {
@@ -20,7 +20,7 @@ namespace Battleships.Models
 
 
         //Results
-        public List<Tuple<GridCoordinates, bool>> player1ShotsMade { get; set; }
-        public List<Tuple<GridCoordinates, bool>> player2ShotsMade { get; set; }
+        public ShotsMade player1ShotsMade { get; set; }
+        public ShotsMade player2ShotsMade { get; set; }
     }
 }

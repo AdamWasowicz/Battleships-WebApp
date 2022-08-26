@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BackEnd.Exceptions;
+using Battleships.Types;
+using BackEnd.Models;
+using Battleships.Interfaces;
 
-using Battleships.shared;
-using Battleships.ship;
-using Battleships.Models;
-using BackEnd.Exceptions;
-
-
-namespace Battleships.gameControl
+namespace Battleships
 {
     public enum Direction
     {
@@ -27,8 +20,8 @@ namespace Battleships.gameControl
         private ICanPlay _player2;
 
         //Game State
-        private List<List<Tuple<GridCoordinates, Ship>>> _gridsWithShips;                               //<Place, Ship>[index of tuple][player1 grids, player2 grids]
-        private List<List<Tuple<GridCoordinates, bool>>>  _shotsMade;                                   //<Place, did something got hit?>[plater1 shot, player2 shot]
+        private List<GridsWithShips> _gridsWithShips;                                                   //<Place, Ship>[index of tuple][player1 grids, player2 grids]
+        private List<ShotsMade>  _shotsMade;                                                            //<Place, did something got hit?>[plater1 shot, player2 shot]
         private List<List<Ship>> _playerShips;                                                          //[Ship][player1 ships, player2 ships]
         private int[] _playerShipsSunk = {0, 0};                                                        //[player1's ships sunk, player2's ships sunk]
         private int _currentTurn = 0;                                                                   //Current turn
@@ -38,84 +31,32 @@ namespace Battleships.gameControl
         private int _amountOfShipsOnOneSide = ShipDetails.ReturnAllAsArray().Length;                    //Number of ships for each player
         private int _maxTurns;                                                                          //After _maxTurns exceded game will finish
         private SimulateBattleshipsOutputDTO _simulationResult = new SimulateBattleshipsOutputDTO();
+        const int maxCoordinateOffset = 10;
 
 
         //GET
-        public int CurrentTurn
-        {
-            get { return _currentTurn; }
-        }
+        public int CurrentTurn { get => _currentTurn; }
 
-        public ICanPlay Player1
-        {
-            get { return _player1.ReturnCopy(); }
-        }
+        public ICanPlay Player1 { get => _player1.ReturnCopy(); }
 
-        public ICanPlay Player2
-        {
-            get { return _player2.ReturnCopy(); }
-        }
+        public ICanPlay Player2 { get => _player2.ReturnCopy(); }
 
-        public int Player1ShipsSunkAmount
-        {
-            get { return _playerShipsSunk[0]; }
-        }
+        public int Player1ShipsSunkAmount { get => _playerShipsSunk[0]; }
 
-        public int Player2ShipsSunkAmount
-        {
-            get { return _playerShipsSunk[1]; }
-        }
+        public int Player2ShipsSunkAmount { get => _playerShipsSunk[1]; }
 
-        public List<Tuple<GridCoordinates, Ship>> Player1GridsWithShipCopy
-        {
-            get { return PlayerGridsWithShipCopy(0); }
-        }
+        public GridsWithShips Player1GridsWithShipCopy { get => _gridsWithShips[0].ReturnCopy(); }
 
-        public List<Tuple<GridCoordinates, Ship>> Player2GridsWithShipCopy
-        {
-            get { return PlayerGridsWithShipCopy(1); }
-        }
+        public GridsWithShips Player2GridsWithShipCopy { get => _gridsWithShips[1].ReturnCopy(); }
 
-        public List<Tuple<GridCoordinates, bool>> Player1ShotsMadeCopy
-        {
-            get { return PlayerShotsMadeCopy(0); }
-        }
+        public ShotsMade Player1ShotsMadeCopy { get => _shotsMade[0].ReturnCopy(); }
 
-        public List<Tuple<GridCoordinates, bool>> Player2ShotsMadeCopy
-        {
-            get { return PlayerShotsMadeCopy(1); }
-        }
+        public ShotsMade Player2ShotsMadeCopy { get => _shotsMade[1].ReturnCopy(); }
 
-        public List<Ship> Player1ShipsCopy
-        {
-            get { return PlayerShipsCopy(0); }
-        }
+        public List<Ship> Player1ShipsCopy { get => PlayerShipsCopy(0); }
 
-        public List<Ship> Player2ShipsCopy
-        {
-            get { return PlayerShipsCopy(1); }
-        }
+        public List<Ship> Player2ShipsCopy { get =>  PlayerShipsCopy(1); }
 
-
-
-        //Copy methods
-        private List<Tuple<GridCoordinates, Ship>> PlayerGridsWithShipCopy(int playerIndex)
-        {
-            List<Tuple<GridCoordinates, Ship>> copy = new List<Tuple<GridCoordinates, Ship>>(_gridsWithShips[playerIndex].Count);
-            foreach (var tuple in _gridsWithShips[playerIndex])
-                copy.Add(new Tuple<GridCoordinates, Ship>(new GridCoordinates(tuple.Item1), new Ship(tuple.Item2)));
-
-            return copy;
-        }
-
-        private List<Tuple<GridCoordinates, bool>> PlayerShotsMadeCopy(int playerIndex)
-        {
-            List<Tuple<GridCoordinates, bool>> copy = new List<Tuple<GridCoordinates, bool>>(_shotsMade[playerIndex].Count);
-            foreach (var tuple in _shotsMade[playerIndex])
-                copy.Add(new Tuple<GridCoordinates, bool>(new GridCoordinates(tuple.Item1), tuple.Item2));
-
-            return copy;
-        }
 
         private List<Ship> PlayerShipsCopy(int playerIndex)
         {
@@ -126,30 +67,21 @@ namespace Battleships.gameControl
             return copy;
         }
 
-
-
-        //Private methods
         private void NextTurnAuto()
         {
             //Select Player
             int playerIndex = _currentTurn % 2;
             int enemyIndex = (_currentTurn + 1) % 2;
             bool isHit = false;
-            string playerName = "";
             GridCoordinates shotCoordinates = new GridCoordinates();
 
 
             if (playerIndex == 0)
-            {
                 shotCoordinates = _player1.MakeMove(Player1ShotsMadeCopy, Player1ShipsCopy);
-                playerName = _player1.GetPlayerName();
-            }
+            
             else
-            {
                 shotCoordinates = _player2.MakeMove(Player2ShotsMadeCopy, Player2ShipsCopy);
-                playerName = _player2.GetPlayerName();
-            }
-
+            
 
             for (int i = 0; i < _gridsWithShips[playerIndex].Count; i++)
             {
@@ -190,7 +122,6 @@ namespace Battleships.gameControl
                 _simulationResult.endMsg = $"Player {_player2.GetPlayerName()} Won";
         }
 
-
         //Places each ship for each player
         public void PlaceShipsMain()
         {
@@ -212,7 +143,6 @@ namespace Battleships.gameControl
         //Gets free grids from VerifyFreeGrids then adds them to _gridsWithShips with new Ship
         private void PlaceShipRandomlyForPlayer(int size, List<GridCoordinates> takenGrids, string shipName, int playerIndex)
         {
-            const int maxCoordinateOffset = 10;
             bool placeFound = false;
             Tuple<bool, GridCoordinates[]> verificationResultTuple = new Tuple<bool, GridCoordinates[]>(false, new GridCoordinates[] {});
 
@@ -303,10 +233,6 @@ namespace Battleships.gameControl
             return new Tuple<bool, GridCoordinates[]>(true, newTakenGridCoordinates); ;
         }
 
-
-
-
-        //Public methods
         public SimulateBattleshipsOutputDTO StartFullGame()
         {
             //simulationResult
@@ -345,7 +271,6 @@ namespace Battleships.gameControl
         }
 
 
-
         public GameControl(ICanPlay player1, ICanPlay player2, int maxTurns = 150)
         {
             _player1 = player1;
@@ -356,21 +281,22 @@ namespace Battleships.gameControl
 
             _maxTurns = maxTurns;
 
-
-            _shotsMade = new List<List<Tuple<GridCoordinates, bool>>>(2)
+            _shotsMade = new List<ShotsMade>(2)
             {
-                new List<Tuple<GridCoordinates, bool>>(maxTurns),
-                new List<Tuple<GridCoordinates, bool>>(maxTurns)
+                new ShotsMade(maxTurns),
+                new ShotsMade(maxTurns),
             };
+
             _playerShips = new List<List<Ship>>(2)
             {
                 new List<Ship>(5),
                 new List<Ship>(5)
             };
-            _gridsWithShips = new List<List<Tuple<GridCoordinates, Ship>>>(2) 
-            { 
-                new List<Tuple<GridCoordinates, Ship>>(17),
-                new List<Tuple<GridCoordinates, Ship>>(17),
+
+            _gridsWithShips = new List<GridsWithShips>(2)
+            {
+                new GridsWithShips(17),
+                new GridsWithShips(17),
             };
         }
     }

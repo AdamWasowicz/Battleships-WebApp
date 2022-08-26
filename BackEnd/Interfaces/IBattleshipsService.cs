@@ -1,6 +1,6 @@
-﻿using Battleships.Models;
+﻿using BackEnd.Models;
 
-namespace Battleships
+namespace BackEnd.Interfaces
 {
     public interface IBattleshipsService
     {

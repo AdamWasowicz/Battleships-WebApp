@@ -1,13 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Battleships;
-using Battleships.Models;
-
+using BackEnd.Models;
+using BackEnd.Interfaces;
 
 namespace BackEnd.Controllers
 {
