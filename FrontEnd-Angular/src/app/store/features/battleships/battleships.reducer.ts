@@ -90,12 +90,11 @@ export const battleshipsReducer = createReducer(
     const newCoords = state.player1ShotsMade[state.player1BoardState.length].item1.x
     + state.player1ShotsMade[state.player1BoardState.length].item1.y
 
-    const boardCopy = state.player1BoardState;
-    boardCopy.push(newCoords);
+    console.log(state);
 
     return {
       ...state,
-      player1BoardState: boardCopy
+      player1BoardState: [...state.player1BoardState, newCoords]
     }
   }),
 
@@ -103,12 +102,11 @@ export const battleshipsReducer = createReducer(
     const newCoords = state.player2ShotsMade[state.player2BoardState.length].item1.x
     + state.player2ShotsMade[state.player2BoardState.length].item1.y
 
-    const boardCopy = state.player2BoardState;
-    boardCopy.push(newCoords);
+    console.log(state)
 
     return {
       ...state,
-      player2BoardState: boardCopy
+      player2BoardState: [...state.player2BoardState, newCoords]
     }
   }),
 

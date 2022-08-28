@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Store } from '@ngrx/store';
 import { AppState } from "../store/app.reducer";
-import { Subscription } from 'rxjs';
+import { Subscription} from 'rxjs';
 import ISimulateBattleshipsInputDTO from "../simulation/assets/ISimulateBattleshipsInputDTO";
 import { requestSimulationEndpoint } from "src/assets/constants/ApiEndpoints";
 import { environment } from "src/environments/environment";
@@ -9,7 +9,7 @@ import { BattleshipsState } from "../store/features/battleships/battleships.redu
 import ISimulateBattleshipsOutputDTO from "../simulation/assets/ISimulateBattleshipsOutputDTO";
 import { ResetBattleshipsState, SetErrorMsg, SetIsDataRecived, SetIsFetching, SetSimulationResults } from "../store/features/battleships/battleships.actions";
 import axios, { AxiosError } from 'axios';
-import { NgForm } from "@angular/forms";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -34,7 +34,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
 
-  constructor(private store: Store<AppState>){}
+  constructor(
+    private store: Store<AppState>,
+    private router: Router){}
 
 
   //OnInit
@@ -64,7 +66,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   requestSimulationApiCall = async (dto: ISimulateBattleshipsInputDTO) => {
 
     const url = environment.API_URL + requestSimulationEndpoint;
-    console.log(url);
 
     let resultDTO: ISimulateBattleshipsOutputDTO;
     this.store.dispatch(SetIsFetching({prop: true}));
@@ -84,7 +85,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.store.dispatch(SetIsDataRecived({prop: true}));
 
       if (result.status == 200)
-        console.log('Navigate -> simulation');
+        this.router.navigate(['simulation']);
     })
     .catch((e: AxiosError) => {
 

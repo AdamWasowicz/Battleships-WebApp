@@ -1,0 +1,75 @@
+@import '../../../../assets/constants/styleConstants.scss';
+
+
+.PlayerBoard {
+
+  //Object size
+  width: 609px;
+  height: 609px;
+
+  //Flex
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  //Border
+  border: 2px solid black;
+}
+
+
+.Grid {
+
+  //Object size
+  width: 55px;
+  height: 55px;
+
+  //Color
+  background-color: gray;
+
+  //Border
+  border: 2px solid black;
+
+  //Text
+  text-align: center;
+  line-height: 55px;
+  font-family: $font-header;
+  font-weight: 700;
+
+  &.C {
+      background-color: $carrier-background;
+      color: $carrier-color;
+  }
+
+  &.B {
+      background-color: $battleship-background;
+      color: $battleships-color;
+  }
+
+  &.D {
+      background-color: $destroyer-background;
+      color: $destroyer-color;
+  }
+
+  &.S {
+      background-color: $submarine-background;
+      color: $submarine-color;
+  }
+
+  &.P {
+      background-color: $patrol_boat-background;
+      color: $patrol_boat-color;
+  }
+
+  &.GridCorner {
+      background-color: rgb(255, 255, 255);
+  }
+
+  &.isHit.Ship {
+      background-color: rgb(240, 22, 22);
+      color: white;
+  }
+  &.isHit {
+      background-color: rgb(208, 118, 118);
+      color: white;
+  }
+}

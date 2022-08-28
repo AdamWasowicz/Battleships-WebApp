@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHome } from './utils';
-import ISimulateBattleshipsInputDTO from '../Simulation/assets/ISimulateBattleshipsInputDTO';
 
 //Style
 import './style.scss';
