@@ -1,0 +1,14 @@
+<div class="SimulationFooter">
+  <div class='TurnContainer'>Turn: {{FormatCurrentTurn()}} / {{maxTurn}}</div>
+  <button class='SimulationButton' (click)='GoBackToRoot()'>Go to Home</button>
+
+  <div class='SpeedControl'>
+    <button (click)='DecreaseDelay()'>-</button>
+    <div title='How long before new turn' class='CurrentDelay'>{{refreshDelay}}</div>
+    <button (click)='IncreaseDelay()'>+</button>
+  </div>
+
+  <button class='SimulationButton' (click)='PauseOrResume()'>
+    {{!isSimulationPause ? 'PAUSE' : 'RESUME'}}
+  </button>
+</div>

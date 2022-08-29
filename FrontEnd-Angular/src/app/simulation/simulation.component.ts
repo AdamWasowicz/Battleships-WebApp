@@ -1,10 +1,10 @@
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Store } from '@ngrx/store';
 import { AppState } from "../store/app.reducer";
 import { Subscription} from 'rxjs';
 import { BattleshipsState } from "../store/features/battleships/battleships.reducer";
 import { IncrementCurrentTurn, UpdatePlayer1BoardState, UpdatePlayer2BoardState } from "../store/features/battleships/battleships.actions";
-import { ActivatedRoute, Route, Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 
 @Component({
@@ -12,7 +12,7 @@ import { ActivatedRoute, Route, Router } from "@angular/router";
   templateUrl: './simulation.component.html',
   styleUrls: ['./simulation.component.scss']
 })
-export class SimulationComponent implements OnInit, OnDestroy, OnChanges {
+export class SimulationComponent implements OnInit, OnDestroy {
 
   //State
   isDataRecived = false;
@@ -61,6 +61,10 @@ export class SimulationComponent implements OnInit, OnDestroy, OnChanges {
         this.endMsg = state.endMsg;
         this.refreshDelay = state.refreshDelay;
         this.isSimulationPause = state.isSimulationPause;
+
+        //When game is over
+        if (this.currentTurn == this.maxTurn && this.isDataRecived)
+          alert(`Game finished\n${this.endMsg}`)
       }
     )
 
@@ -81,15 +85,6 @@ export class SimulationComponent implements OnInit, OnDestroy, OnChanges {
 
     //GameProgress
     clearTimeout(this.gameProgressSubscription);
-  }
-
-  ngOnChanges(): void {
-    //GameProgress
-    //clearTimeout(this.gameProgressSubscription);
-
-    //When game is over
-    if (this.currentTurn >= this.maxTurn && this.isDataRecived)
-      alert(`Game finished\n${this.endMsg}`)
   }
 
 }

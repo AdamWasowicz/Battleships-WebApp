@@ -1,4 +1,4 @@
-import { Component} from "@angular/core";
+import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 
 
@@ -7,9 +7,9 @@ import { Router } from "@angular/router";
   templateUrl: './noDataError.component.html',
   styleUrls: ['./noDataError.component.scss']
 })
-export class NoDataError {
+export class NoDataErrorComponent {
+
+  public GoBackToRoot = () => this.router.navigate(['/']);
 
   constructor(private router: Router) {}
-
-  public goBackToRoot = () => this.router.navigate(['/']);
 }

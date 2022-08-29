@@ -1,3 +1,13 @@
-<div className='PlayerBoard'>
-  {{playerId}}
+<div class='PlayerBoard'>
+  <span *ngFor="let i of eleven">
+    <span *ngFor="let d of eleven">
+      <app-grid
+        [X]='i.toLocaleString()'
+        [Y]='d.toLocaleString()'
+        [ship]='ReturnShipMapCoordinates(i, d)'
+        [isHit]='ReturnShotsMapCoordinates(i,d)'
+      >
+      </app-grid>
+    </span>
+  </span>
 </div>

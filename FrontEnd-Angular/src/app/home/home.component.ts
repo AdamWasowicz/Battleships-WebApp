@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from "../store/app.reducer";
 import { Subscription} from 'rxjs';
 import ISimulateBattleshipsInputDTO from "../simulation/assets/ISimulateBattleshipsInputDTO";
-import { requestSimulationEndpoint } from "src/assets/constants/ApiEndpoints";
-import { environment } from "src/environments/environment";
+import { requestSimulationEndpoint } from "../../assets/constants/ApiEndpoints";
+import { environment } from "../../environments/environment.prod";
 import { BattleshipsState } from "../store/features/battleships/battleships.reducer";
 import ISimulateBattleshipsOutputDTO from "../simulation/assets/ISimulateBattleshipsOutputDTO";
 import { ResetBattleshipsState, SetErrorMsg, SetIsDataRecived, SetIsFetching, SetSimulationResults } from "../store/features/battleships/battleships.actions";
@@ -41,6 +41,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   //OnInit
   ngOnInit(): void {
+
+    console.log('FrontEnd-Angular');
 
     //Get data from store
     this.subscription = this.store.select('battleships').subscribe(

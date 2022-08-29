@@ -52,6 +52,20 @@ export class PlayerBoardComponent implements OnInit, OnDestroy {
     return shotsMap;
   }
 
+  ReturnShipMapCoordinates = (I: number, D: number): IShip => {
+
+    return this.shipsMap.get(
+      String.fromCharCode(I + +'A'.charCodeAt(0) - 1) + D.toLocaleString()
+    )
+  }
+
+  ReturnShotsMapCoordinates = (I: number, D: number): boolean => {
+
+    return this.shotsMap.get(
+      String.fromCharCode(I + +'A'.charCodeAt(0) - 1) + D.toLocaleString()
+    )
+  }
+
 
   ngOnInit(): void {
     //Store
@@ -65,12 +79,12 @@ export class PlayerBoardComponent implements OnInit, OnDestroy {
         this.playerBoardState = this.playerId == 0
         ? state.player1BoardState
         : state.player2BoardState;
+
+        //CreateMaps
+        this.shipsMap = this.CreatePlayerShipsMap(this.playerShips);
+        this.shotsMap = this.CreateShotsMap(this.playerBoardState);
       }
     )
-
-    //CreateMaps
-    this.shipsMap = this.CreatePlayerShipsMap(this.playerShips);
-    this.shotsMap = this.CreateShotsMap(this.playerBoardState);
   }
 
   ngOnDestroy(): void {

@@ -90,8 +90,6 @@ export const battleshipsReducer = createReducer(
     const newCoords = state.player1ShotsMade[state.player1BoardState.length].item1.x
     + state.player1ShotsMade[state.player1BoardState.length].item1.y
 
-    console.log(state);
-
     return {
       ...state,
       player1BoardState: [...state.player1BoardState, newCoords]
@@ -101,8 +99,6 @@ export const battleshipsReducer = createReducer(
   on(UpdatePlayer2BoardState, (state: BattleshipsState) => {
     const newCoords = state.player2ShotsMade[state.player2BoardState.length].item1.x
     + state.player2ShotsMade[state.player2BoardState.length].item1.y
-
-    console.log(state)
 
     return {
       ...state,

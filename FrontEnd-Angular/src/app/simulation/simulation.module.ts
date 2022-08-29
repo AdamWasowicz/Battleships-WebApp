@@ -4,20 +4,25 @@ import { SimulationComponent } from './simulation.component';
 import { SimulationHeaderComponent } from './components/simulationHeader/simulationHeader.component';
 import { RouterModule } from '@angular/router';
 import { PlayerBoardComponent } from './components/playerBoard/playerBoard.component';
-import { NoDataError } from './components/noDataError/noDataError.component';
+import { NoDataErrorComponent } from './components/noDataError/noDataError.component';
+import { GridComponent } from './components/grid/grid.component';
+import { SimulationFooterComponent } from './components/simulationFooter/simulationFooter.component';
+
 
 @NgModule({
   declarations: [
     SimulationComponent,
     SimulationHeaderComponent,
     PlayerBoardComponent,
-    NoDataError
+    NoDataErrorComponent,
+    GridComponent,
+    SimulationFooterComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild([
       { path: '', component: SimulationComponent },
-      { path: 'error', component: NoDataError}
+      { path: 'error', component: NoDataErrorComponent}
     ]),
   ],
 })

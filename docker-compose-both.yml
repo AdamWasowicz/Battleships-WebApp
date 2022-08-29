@@ -1,0 +1,47 @@
+version: '3.8'
+
+
+services:
+  frontend-angular:
+    container_name: Battleships-FrontEnd-Angular
+    build: 
+      context: './FrontEnd-Angular'
+      dockerfile: Dockerfile
+      args:
+        ANGULAR_APP_API_URL: "http://localhost:${API_PORT_OUTSIDE}"
+    ports:
+      - "4200:81"
+    volumes:
+      - '.:/app'
+      - '/app/FrontEnd-Angular/node_modules'
+    depends_on:
+      - backend
+
+  frontend:
+    container_name: Battleships-FrontEnd
+    build: 
+      context: './FrontEnd'
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_URL: "http://localhost:${API_PORT_OUTSIDE}"
+    ports:
+      - "3000:80"
+    volumes:
+      - '.:/app'
+      - '/app/FrontEnd/node_modules'
+    depends_on:
+      - backend
+
+  backend:
+    container_name: 'Battleships-BackEnd'
+    build:
+      context: ./BackEnd
+      dockerfile: Dockerfile
+      args:
+        ASPNETCORE_EXPOSE_PORT: ${API_PORT_INSIDE}
+    ports:
+      - "${API_PORT_OUTSIDE}:${API_PORT_INSIDE}"
+    environment:
+      ASPNETCORE_URLS: http://+:${API_PORT_INSIDE}
+
+
