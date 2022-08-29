@@ -1,0 +1,12 @@
+<div *ngIf="isDataRecived" class='Simulation'>
+  <app-simulationHeader></app-simulationHeader>
+
+  <div class="PlayerBoardContainer">
+    <app-playerBoard [playerId]=0></app-playerBoard>
+    <app-playerBoard [playerId]=1></app-playerBoard>
+  </div>
+
+  <app-simulationFooter></app-simulationFooter>
+</div>
+
+

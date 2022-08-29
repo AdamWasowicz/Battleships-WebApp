@@ -1,0 +1,17 @@
+@import '../../../../assets/constants/styleConstants.scss';
+
+
+.PlayerBoard {
+
+  //Object size
+  width: 609px;
+  height: 609px;
+
+  //Flex
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  //Border
+  border: 2px solid black;
+}

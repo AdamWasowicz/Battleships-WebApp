@@ -1,0 +1,47 @@
+<div class="Home">
+  <div class="FormContainer">
+    <div class='FormTitle'>
+      <p>Battle</p>
+      <p>ships(Angular)</p>
+    </div>
+
+    <form (ngSubmit)="makeRequest()" (change)="onFormChange()">
+      <div class="FormField">
+        <label>Player1 Name:</label>
+        <input
+          id="player1Name"
+          type="text"
+          [(ngModel)]='player1Name'
+          name="player1Name"
+        >
+        <div *ngIf="!player1NameValid" class="FormError">Player1's Name must not be blank</div>
+      </div>
+
+      <div class="FormField">
+        <label>Player2 Name:</label>
+        <input
+          id="player2Name"
+          type="text"
+          [(ngModel)]='player2Name'
+          name="player2Name"
+        >
+        <div *ngIf="!player2NameValid" class="FormError">Player2's Name must not be blank</div>
+      </div>
+
+      <div class="FormField">
+        <label>Max Turns:</label>
+        <input
+          id="maxTurns"
+          type="number"
+          [(ngModel)]='maxTurns'
+          name="maxTurns"
+        >
+        <div *ngIf="!maxTurnsValid" class="FormError">Max turns must be 1 or higher</div>
+      </div>
+
+      <div class="SubmitButtonContainer">
+        <button class="FormSubmitButton" [disabled]="!formValid" type="submit">Simulate</button>
+      </div>
+    </form>
+  </div>
+</div>

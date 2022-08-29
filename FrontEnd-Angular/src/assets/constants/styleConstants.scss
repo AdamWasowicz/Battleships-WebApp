@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+
+//Colors
+//Primary
+$primary-base:rgb(63, 83, 156);
+
+//Secondary
+$secondary-base: orange;
+
+//Ships Grids
+$carrier-background: rgb(130, 245, 29);
+$carrier-color: black;
+
+$battleship-background: rgb(44, 216, 236);
+$battleships-color: black;
+
+$destroyer-background: rgb(153, 75, 181);
+$destroyer-color: black;
+
+$submarine-background: rgb(136, 69, 1);
+$submarine-color: black;
+
+$patrol_boat-background: rgb(14, 71, 226);
+$patrol_boat-color: black;
+
+
+//Font
+$font-header: 'Roboto', sans-serif;
+$font-normal: 'Noto Sans', sans-serif;
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+button:hover {
+
+  cursor: pointer;
+}
